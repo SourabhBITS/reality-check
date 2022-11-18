@@ -173,15 +173,6 @@ jobs:
       - run: docker version
 
   # feature jobs
-  contexts:
-    <<: *contexts_defaults
-    steps:
-      - run: env | grep CONTEXT_END_TO_END_TEST_VAR
-
-  multi-contexts:
-    <<: *contexts_defaults
-    steps:
-      - run: env | grep MULTI_CONTEXT_END_TO_END_VAR
 
   write_workspace:
     <<: *workspaces_defaults
@@ -262,14 +253,6 @@ jobs:
 
 workflows:
   version: 2
-  resource_class_jobs:
-    jobs:
-      - small
-      - medium
-      - medium+
-      - large
-      - xlarge
-
   vm_jobs:
     jobs:
       - machine
@@ -294,10 +277,6 @@ workflows:
   feature_jobs:
     jobs:
       - save_and_restore_cache
-      - contexts:
-          context: org-global
-      - multi-contexts:
-          context: individual-local
       - write_workspace
       - read_workspace:
           requires:
